@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bip39mnemonic/core/util/words.dart';
+import 'package:bip39mnemonic/core/util/word.dart';
 import 'package:crypto/crypto.dart';
 import 'package:hex/hex.dart';
 import 'package:meta/meta.dart';

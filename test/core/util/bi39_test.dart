@@ -1,5 +1,5 @@
 import 'package:bip39mnemonic/core/util/bip39.dart';
-import 'package:bip39mnemonic/core/util/words.dart';
+import 'package:bip39mnemonic/core/util/word.dart';
 import 'package:test/test.dart';
 
 void main() {
