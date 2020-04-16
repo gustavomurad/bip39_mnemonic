@@ -1,12 +1,20 @@
+import 'package:bip39mnemonic/core/enumerators/language_enum.dart';
 import 'package:bip39mnemonic/core/util/bip39.dart';
 import 'package:bip39mnemonic/core/util/word.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+
+import '../fixtures/Words_test_impl.dart';
+
+class MockWordsImpl extends Mock implements Words {}
 
 void main() {
   Bip39 bip39;
+  WordsTestImpl wordsMock;
 
   setUp(() {
-    bip39 = Bip39(wordList: WordLists.ENGLISH);
+    wordsMock = WordsTestImpl();
+    bip39 = Bip39(wordList: Languages.ENGLISH, words: wordsMock);
   });
 
   group('basic check', () {
@@ -15,7 +23,7 @@ void main() {
     });
 
     test('check if is a english word list is loaded', () async {
-      expect(bip39.selectedWordList, WordLists.ENGLISH,
+      expect(bip39.selectedWordList, Languages.ENGLISH,
           reason: 'the list is english');
     });
 
@@ -26,11 +34,11 @@ void main() {
 
   group('setDefaultWordlist changes default wordlist', () {
     test('english to italian then english test', () async {
-      expect(bip39.selectedWordList, WordLists.ENGLISH,
+      expect(bip39.selectedWordList, Languages.ENGLISH,
           reason: 'the list is english');
 
-      bip39.setDefaultWordlist(wordList: WordLists.ITALIAN);
-      expect(bip39.selectedWordList, WordLists.ITALIAN,
+      bip39.setDefaultWordList(wordList: Languages.ITALIAN, words: wordsMock);
+      expect(bip39.selectedWordList, Languages.ITALIAN,
           reason: 'the list is italian');
 
       final phraseItalian =
@@ -38,8 +46,8 @@ void main() {
       expect(phraseItalian.substring(0, 5), 'abaco',
           reason: 'the word is abaco');
 
-      bip39.setDefaultWordlist(wordList: WordLists.ENGLISH);
-      expect(bip39.selectedWordList, WordLists.ENGLISH,
+      bip39.setDefaultWordList(wordList: Languages.ENGLISH, words: wordsMock);
+      expect(bip39.selectedWordList, Languages.ENGLISH,
           reason: 'the list is english');
 
       final phraseEnglish =
@@ -87,12 +95,12 @@ void main() {
           reason: 'fails for a mnemonic that is too long');
     });
 
-    test(' words are not in the word list', () async {
+    test(' wordsMock are not in the word list', () async {
       expect(
           bip39.validateMnemonic(
               'turtle front uncle idea crush write shrug there lottery flower risky shell'),
           false,
-          reason: 'fails if mnemonic words are not in the word list');
+          reason: 'fails if mnemonic wordsMock are not in the word list');
     });
 
     test('invalid checksum', () async {

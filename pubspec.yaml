@@ -14,6 +14,7 @@ dependencies:
   pointycastle: ^1.0.2
   hex: ^0.1.2
   google_fonts: ^0.4.0
+  mockito: ^4.1.1
 
 dev_dependencies:
   flutter_driver:

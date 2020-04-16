@@ -1,39 +1,39 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bip39mnemonic/core/enumerators/language_enum.dart';
 import 'package:meta/meta.dart';
 
-enum WordLists {
-  CHINESE_SIMPLIFIED,
-  CHINESE_TRADITIONAL,
-  ENGLISH,
-  FRENCH,
-  ITALIAN,
-  JAPANESE,
-  KOREAN,
-  SPANISH
+abstract class Words {
+  List<String> loadWordListFromFile({@required Languages wordList});
 }
 
-Map<WordLists, String> _wordLists = {
-  WordLists.CHINESE_SIMPLIFIED: 'chinese_simplified.json',
-  WordLists.CHINESE_TRADITIONAL: 'chinese_traditional.json',
-  WordLists.ENGLISH: 'english.json',
-  WordLists.FRENCH: 'french.json',
-  WordLists.ITALIAN: 'italian.json',
-  WordLists.JAPANESE: 'japanese.json',
-  WordLists.KOREAN: 'korean.json',
-  WordLists.SPANISH: 'spanish.json',
-};
+class WordsImpl implements Words {
 
-String _getWordList({@required WordLists wordList}) {
-  return _wordLists.entries.firstWhere((x) => x.key == wordList).value;
-}
+  Map<Languages, String> _languageFiles;
 
-List<String> words({@required WordLists wordList}) {
-  final String res =
-      File('lib/core/wordlists/${_getWordList(wordList: wordList)}')
-          .readAsStringSync();
-  List<String> words =
-      (json.decode(res) as List).map((e) => e.toString()).toList();
-  return words;
+
+  WordsImpl({ Map<Languages, String> languageFiles = const {
+    Languages.CHINESE_SIMPLIFIED: 'lib/core/wordlists/chinese_simplified.json',
+    Languages
+        .CHINESE_TRADITIONAL: 'lib/core/wordlists/chinese_traditional.json',
+    Languages.ENGLISH: 'lib/core/wordlists/english.json',
+    Languages.FRENCH: 'lib/core/wordlists/french.json',
+    Languages.ITALIAN: 'lib/core/wordlists/italian.json',
+    Languages.JAPANESE: 'lib/core/wordlists/japanese.json',
+    Languages.KOREAN: 'lib/core/wordlists/korean.json',
+    Languages.SPANISH: 'lib/core/wordlists/spanish.json',
+  }}) : this._languageFiles = languageFiles;
+
+  @override
+  List<String> loadWordListFromFile({Languages wordList}) {
+    final file =
+        _languageFiles.entries
+            .firstWhere((x) => x.key == wordList)
+            .value;
+    final String res = File(file).readAsStringSync();
+    List<String> words =
+    (json.decode(res) as List).map((e) => e.toString()).toList();
+    return words;
+  }
 }

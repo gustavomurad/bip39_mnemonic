@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bip39mnemonic/core/enumerators/language_enum.dart';
 import 'package:bip39mnemonic/core/util/word.dart';
 import 'package:crypto/crypto.dart';
 import 'package:hex/hex.dart';
@@ -23,18 +24,19 @@ class Bip39 {
   static const String _invalidMnemonic = 'Invalid mnemonic';
   static const String _invalidEntropy = 'Invalid entropy';
   static const String _invalidChecksum = 'Invalid mnemonic checksum';
-  WordLists selectedWordList;
+  Languages selectedWordList;
   List<String> _wordList;
 
   List<String> get wordList => this._wordList;
 
-  Bip39({@required WordLists wordList}) {
-    this._wordList = words(wordList: wordList);
+  Bip39({@required Languages wordList, @required Words words}) {
+    this._wordList = words.loadWordListFromFile(wordList: wordList);
     this.selectedWordList = wordList;
   }
 
-  void setDefaultWordlist({@required WordLists wordList}) {
-    this._wordList = words(wordList: wordList);
+  void setDefaultWordList(
+      {@required Languages wordList, @required Words words}) {
+    this._wordList = words.loadWordListFromFile(wordList: wordList);
     this.selectedWordList = wordList;
   }
 

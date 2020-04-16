@@ -16,4 +16,4 @@ jobs:
     # Analyze our Dart code
     - run: flutter analyze
     # Run our tests
-    - run: flutter test test/core/util/bi39_test.dart
+    - run: flutter test test/
