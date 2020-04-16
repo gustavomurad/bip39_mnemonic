@@ -4,17 +4,15 @@ import 'package:bip39mnemonic/core/util/word.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import '../fixtures/Words_test_impl.dart';
-
 class MockWordsImpl extends Mock implements Words {}
 
 void main() {
   Bip39 bip39;
-  WordsTestImpl wordsMock;
+  Words wordsTest;
 
   setUp(() {
-    wordsMock = WordsTestImpl();
-    bip39 = Bip39(wordList: Languages.ENGLISH, words: wordsMock);
+    wordsTest = WordsImpl();
+    bip39 = Bip39(wordList: Languages.ENGLISH, words: wordsTest);
   });
 
   group('basic check', () {
@@ -37,7 +35,7 @@ void main() {
       expect(bip39.selectedWordList, Languages.ENGLISH,
           reason: 'the list is english');
 
-      bip39.setDefaultWordList(wordList: Languages.ITALIAN, words: wordsMock);
+      bip39.setDefaultWordList(wordList: Languages.ITALIAN, words: wordsTest);
       expect(bip39.selectedWordList, Languages.ITALIAN,
           reason: 'the list is italian');
 
@@ -46,7 +44,7 @@ void main() {
       expect(phraseItalian.substring(0, 5), 'abaco',
           reason: 'the word is abaco');
 
-      bip39.setDefaultWordList(wordList: Languages.ENGLISH, words: wordsMock);
+      bip39.setDefaultWordList(wordList: Languages.ENGLISH, words: wordsTest);
       expect(bip39.selectedWordList, Languages.ENGLISH,
           reason: 'the list is english');
 

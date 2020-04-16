@@ -12,7 +12,6 @@ class WordsImpl implements Words {
 
   Map<Languages, String> _languageFiles;
 
-
   WordsImpl({ Map<Languages, String> languageFiles = const {
     Languages.CHINESE_SIMPLIFIED: 'lib/core/wordlists/chinese_simplified.json',
     Languages
